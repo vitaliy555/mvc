@@ -12,8 +12,7 @@
 
     <context:component-scan base-package="com.mkyong.web"/>
 
-    <bean
-            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">
             <value>/WEB-INF/views/jsp/</value>
         </property>
@@ -26,4 +25,14 @@
 
     <mvc:annotation-driven/>
 
+    <bean name="simpleMappingExceptionResolver"
+          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <map>
+                <entry key="NullPointerException" value="npeError"/>
+            </map>
+        </property>
+        <property name="defaultErrorView" value="error"/>
+        <property name="exceptionAttribute" value="ex"/>
+    </bean>
 </beans>
