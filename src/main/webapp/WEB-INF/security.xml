@@ -8,10 +8,28 @@
 	http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <http auto-config="true">
-        <intercept-url pattern="/security/userPermit" access="ROLE_USER" />
-        <intercept-url pattern="/security/adminPermit" access="ROLE_ADMIN" />
+    <!--auto-login-page-->
+    <!--<http auto-config="true">-->
+        <!--<intercept-url pattern="/security/userPermit" access="ROLE_USER" />-->
+        <!--<intercept-url pattern="/security/adminPermit" access="ROLE_ADMIN" />-->
+    <!--</http>-->
+
+    <http use-expressions="true">
+        <intercept-url pattern="/security/userPermit" access="isAnonymous()" />
+        <intercept-url pattern="/security/adminPermit" access="isAuthenticated()" />
+
+        <access-denied-handler error-page="/security/accessDenied"/>
+
+        <form-login login-page='/security/login'
+                    default-target-url="/security/welcome"
+                    authentication-failure-url="/security/login?error=true"
+                    username-parameter="user_login"
+                    password-parameter="password_login" />
+
+        <logout logout-success-url="/security/login" />
     </http>
+
+
 
     <authentication-manager>
         <authentication-provider>

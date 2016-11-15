@@ -12,11 +12,22 @@
 </head>
 
 
+
  <div class="container">
      <div class="row">
          <div class="col-md-offset-5 col-md-3">
              <div class="form-login">
-                 <h4>Welcome back.</h4>
+                <c:choose>
+                    <c:when test="${not empty error}">
+                        <div class="alert alert-danger fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Ops!</strong> ${error}
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <h4>Welcome back.</h4>
+                    </c:otherwise>
+                </c:choose>
                  <form name='form_login' action="j_spring_security_check" method='POST'>
                      <input type="text" name='user_login' id="userName" class="form-control input-sm chat-input" placeholder="username" />
                      </br>
